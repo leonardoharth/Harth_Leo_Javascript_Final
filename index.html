@@ -17,7 +17,6 @@
             <option selected="All">Please select a Volcanic Region</option>
           </select>
         </div>
-        </br>
         <div class="slider">
             <p>Please Select the starting year for registered eruptions:</p>
             <input id="slider1" type="range" min=-10450 max=2020 value=-10450>
@@ -25,22 +24,91 @@
             </br>
             <p>Please Select the ending year for registered eruptions:</p>
             <input id="slider2" type="range" min=-10450 max=2020 value=2020>
+            </br>
+            </br>
         </div>
-        </br>
-        </br>
         <div class="coloring">
-          <select id="Region">
+          <select id="coloring">
             <option selected="All">Please select a feature to display</option>
-            <option value="Type">Volcano Type</option>
+            <!-- <option value="Type">Type</option>
             <option value="Elevation">Elevation</option>
-            <option value="Epoch">Epoch</option>
+            <option value="Rock_type">Rock_type</option> -->
           </select>
         </div>
+        </br>
+        <button id="reset" onclick="location.reload();">Reset</button>
     </div>
     <!-- Map -->
     <div id="map" class="map"></div>
     <!-- Legend -->
     <!-- The template for this legend was obtained here: https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/  -->
+    <div class="legend" id="legend_volcano_type">
+        <div class='my-legend'>
+          <div class='legend-title'>Types of Volcanoes</div>
+          <div class='legend-scale'>
+            <ul class='legend-labels'>
+              <li><span style='background:#fff7f3;'></span>Maar</li>
+              <li><span style='background:#fde0dd;'></span>Lava dome</li>
+              <li><span style='background:#fcc5c0;'></span>Pyroclastic cone</li>
+              <li><span style='background:#fa9fb5;'></span>Caldera</li>
+              <li><span style='background:#f768a1;'></span>Stratovolcano</li>
+              <li><span style='background:#dd3497;'></span>Complex</li>
+              <li><span style='background:#ae017e;'></span>Submarine</li>
+              <li><span style='background:#7a0177;'></span>Shield</li>
+              <li><span style='background:#49006a;'></span>Lava cone</li>
+              <li><span style='background:#000000;'></span>Volcanic field</li>
+              <li><span style='background:#081d58;'></span>Explosion crater</li>
+              <li><span style='background:#253494;'></span>Fissure vent</li>
+              <li><span style='background:#225ea8;'></span>Tuff cone</li>
+              <li><span style='background:#1d91c0;'></span>Pyroclastic shield</li>
+              <li><span style='background:#41b6c4;'></span>Compound</li>
+              <li><span style='background:#7fcdbb;'></span>Crater rows</li>
+              <li><span style='background:#c7e9b4;'></span>Cone</li>
+              <li><span style='background:#edf8b1;'></span>Tuff ring</li>
+              <li><span style='background:#ffffd9;'></span>Subglacial</li>
+            </ul>
+          </div>
+          <div class='legend-source'>Source: <a href="https://volcano.si.edu/#">National Museum of Natural History</a></div>
+        </div>
+    </div>
+    <div class="legend" id="legend_rock_type">
+        <div class='my-legend'>
+          <div class='legend-title'>Predominant Rock type</div>
+          <div class='legend-scale'>
+            <ul class='legend-labels'>
+              <li><span style='background:#ffffff;'></span>Foidite</li>
+              <li><span style='background:#ffffe5;'></span>Basalt / Picro-Basalt</li>
+              <li><span style='background:#fff7bc;'></span>Trachyte / Trachydacite</li>
+              <li><span style='background:#fee391;'></span>Phono-tephrite /  Tephri-phonolite</li>
+              <li><span style='background:#fec44f;'></span>Phonolite</li>
+              <li><span style='background:#fe9929;'></span>Trachyandesite / Basaltic Trachyandesite</li>
+              <li><span style='background:#ec7014;'></span>Rhyolite</li>
+              <li><span style='background:#cc4c02;'></span>Trachybasalt / Tephrite Basanite</li>
+              <li><span style='background:#993404;'></span>Dacite</li>
+              <li><span style='background:#662506;'></span>Andesite / Basaltic Andesite</li>
+              <li><span style='background:#000000;'></span>No_information</li>
+            </ul>
+          </div>
+          <div class='legend-source'>Source: <a href="https://volcano.si.edu/#">National Museum of Natural History</a></div>
+        </div>
+    </div>
+    <div class="legend" id="legend_elevation">
+        <div class='my-legend'>
+          <div class='legend-title'>Elevation in meters</div>
+          <div class='legend-scale'>
+            <ul class='legend-labels'>
+              <li><span style='background:#ffffb2;'></span>Over 5000m</li>
+              <li><span style='background:#fed976;'></span>Between 2500 and 5000m</li>
+              <li><span style='background:#feb24c;'></span>Between 1250 and 2500</li>
+              <li><span style='background:#fd8d3c;'></span>Between 500 and 1250</li>
+              <li><span style='background:#f03b20;'></span>Between 0 and 500m</li>
+              <li><span style='background:#662506;'></span>Between 0 append 1000m underwater</li>
+              <li><span style='background:#bd0026;'></span>Below 1000m underwater</li>
+            </ul>
+          </div>
+          <div class='legend-source'>Source: <a href="https://volcano.si.edu/#">National Museum of Natural History</a></div>
+        </div>
+    </div>
     <!-- Javascript Imports -->
     <script src="js/jquery-2.2.0.js"></script>
     <script src="js/underscore.js"></script>

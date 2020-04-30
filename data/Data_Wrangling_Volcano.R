@@ -133,3 +133,6 @@ volcano <- volcano %>%
 # write_json(volcano, "volcano.json")
 # 
 # st_write(volcano_sf, "volcano_sf.geojson", driver = "geojson")
+
+ggplot(data = volcano_test) +
+  geom_histogram(aes(Elevation_meters), bins = 100)

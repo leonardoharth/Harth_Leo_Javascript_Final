@@ -26,6 +26,10 @@ var uniqueRegions = [];
 
 $('.slider').hide();
 $('.coloring').hide();
+$('#reset').hide();
+$('#legend_volcano_type').hide();
+$('#legend_rock_type').hide();
+$('#legend_elevation').hide();
 
 /* =====================
 Add a base map for initial vizualization, create subregion list
@@ -132,3 +136,137 @@ $('#slider2').change(function(e) {
   map.fitBounds(timelinemap.getBounds());
   $('.coloring').show();
 });
+
+/* =====================
+Create coloring options
+===================== */
+
+$('#coloring').append('<option value="Type">Type</option>');
+$('#coloring').append('<option value="Elevation">Elevation</option>');
+$('#coloring').append('<option value="Rock_type">Rock_type</option>');
+
+var colormap = L.featureGroup();
+var coloring;
+
+var get_color_type = function(entry) {
+  if (entry['Type'] === "Maar") {
+      return "#fff7f3";
+  } else if (entry['Type'] === "Lava dome") {
+      return "#fde0dd";
+  } else if (entry['Type'] === "Pyroclastic cone") {
+      return "#fcc5c0";
+  } else if (entry['Type'] === "Caldera") {
+      return "#fa9fb5";
+  } else if (entry['Type'] === "Stratovolcano") {
+      return "#f768a1";
+  } else if (entry['Type'] === "Complex") {
+      return "#dd3497";
+  } else if (entry['Type'] === "Submarine") {
+      return "#ae017e";
+  } else if (entry['Type'] === "Shield") {
+      return "#7a0177";
+  } else if (entry['Type'] === "Lava cone") {
+      return "#49006a";
+  } else if (entry['Type'] === "Volcanic field") {
+      return "#000000";
+  } else if (entry['Type'] === "Explosion crater") {
+      return "#081d58";
+  } else if (entry['Type'] === "Fissure vent") {
+      return "#253494";
+  } else if (entry['Type'] === "Tuff cone") {
+      return "#225ea8";
+  } else if (entry['Type'] === "Pyroclastic shield") {
+      return "#1d91c0";
+  } else if (entry['Type'] === "Compound") {
+      return "#41b6c4";
+  } else if (entry['Type'] === "Crater rows") {
+      return "#7fcdbb";
+  } else if (entry['Type'] === "Cone") {
+      return "#c7e9b4";
+  } else if (entry['Type'] === "Tuff ring") {
+      return "#edf8b1";
+  } else if (entry['Type'] === "Subglacial") {
+      return "#ffffd9";
+  } else {
+      return "#41ab5d";
+  }
+};
+
+var get_color_elevation = function(entry) {
+    return entry['Elevation_meters'] > 5000  ? "#ffffb2" :
+           entry['Elevation_meters'] > 2500  ? "#fed976" :
+           entry['Elevation_meters'] > 1250  ? "#feb24c" :
+           entry['Elevation_meters'] > 500   ? "#fd8d3c" :
+           entry['Elevation_meters'] > 0     ? "#f03b20" :
+           entry['Elevation_meters'] > -1000 ? "#bd0026" :
+                      "#000000";
+};
+
+var get_color_rock = function(entry) {
+  if (entry['Dominant_rock_type'] === "Foidite") {
+      return "#ffffff";
+  } else if (entry['Dominant_rock_type'] === "Basalt / Picro-Basalt") {
+      return "#ffffe5";
+  } else if (entry['Dominant_rock_type'] === "Trachyte / Trachydacite") {
+      return "#fff7bc";
+  } else if (entry['Dominant_rock_type'] === "Phono-tephrite /  Tephri-phonolite") {
+      return "#fee391";
+  } else if (entry['Dominant_rock_type'] === "Phonolite") {
+      return "#fec44f";
+  } else if (entry['Dominant_rock_type'] === "Trachyandesite / Basaltic Trachyandesite") {
+      return "#fe9929";
+  } else if (entry['Dominant_rock_type'] === "Rhyolite") {
+      return "#ec7014";
+  } else if (entry['Dominant_rock_type'] === "Trachybasalt / Tephrite Basanite") {
+      return "#cc4c02";
+  } else if (entry['Dominant_rock_type'] === "Dacite") {
+      return "#993404";
+  } else if (entry['Dominant_rock_type'] === "Andesite / Basaltic Andesite") {
+      return "#662506";
+  } else if (entry['Dominant_rock_type'] === "No_information") {
+      return "#000000";
+  } else {
+      return "#000000";
+  }
+}
+
+$( "#coloring" ).change(function() {
+        $('.slider').hide();
+        $('#Region').hide();
+        map.removeLayer(region_map);
+        map.removeLayer(basemap);
+        map.removeLayer(timelinemap);
+        map.removeLayer(colormap);
+        colormap = L.featureGroup();
+        coloring = $("#coloring option:selected").text();
+        console.log(coloring);
+        var get_color
+        if (coloring == "Type") {
+          var get_color = get_color_type;
+          $('#legend_volcano_type').show();
+          $('#legend_rock_type').hide();
+          $('#legend_elevation').hide();
+        } else if (coloring == "Rock_type") {
+          var get_color = get_color_rock;
+          $('#legend_volcano_type').hide();
+          $('#legend_rock_type').show();
+          $('#legend_elevation').hide();
+        } else if (coloring == "Elevation") {
+          var get_color = get_color_elevation;
+          $('#legend_volcano_type').hide();
+          $('#legend_rock_type').hide();
+          $('#legend_elevation').show();
+        }
+        timeline_dat.forEach(function(entry) {
+          var lat = entry['Latitude'];
+          var lon = entry['Longitude'];
+          var color = get_color(entry);
+          L.circleMarker([lat, lon], {
+            radius: 8,
+            fillColor: color,
+            color: "",
+            fillOpacity: .9}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type']).addTo(colormap);
+        });
+        map.addLayer(colormap);
+        $('#reset').show();
+    });
