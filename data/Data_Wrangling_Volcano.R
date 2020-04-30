@@ -121,7 +121,7 @@ colnames(volcano)
 volcano <- volcano %>% 
   dplyr::select(-join_id, -Last_known_eruption)
 
-volcano_sf <- st_as_sf(volcano, coords = c("Longitude", "Latitude"), crs = 4326)
+# volcano_sf <- st_as_sf(volcano, coords = c("Longitude", "Latitude"), crs = 4326)
 
 # m <- leaflet(data = volcano_sf) %>%
 #   addTiles() %>%

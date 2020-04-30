@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h1>VOLCANO EXPLORER</h1>
+        </br>
+        <div>
+          <select id="Region">
+            <option selected="All">Please select a Volcanic Region</option>
+          </select>
+        </div>
+        </br>
+        <div class="slider">
+            <p>Please Select the starting year for registered eruptions:</p>
+            <input id="slider1" type="range" min=-10450 max=2020 value=-10450>
+            </br>
+            </br>
+            <p>Please Select the ending year for registered eruptions:</p>
+            <input id="slider2" type="range" min=-10450 max=2020 value=2020>
+        </div>
+        </br>
+        </br>
+        <div class="coloring">
+          <select id="Region">
+            <option selected="All">Please select a feature to display</option>
+            <option value="Type">Volcano Type</option>
+            <option value="Elevation">Elevation</option>
+            <option value="Epoch">Epoch</option>
+          </select>
+        </div>
+    </div>
+    <!-- Map -->
+    <div id="map" class="map"></div>
+    <!-- Legend -->
+    <!-- The template for this legend was obtained here: https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/  -->
+    <!-- Javascript Imports -->
+    <script src="js/jquery-2.2.0.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
