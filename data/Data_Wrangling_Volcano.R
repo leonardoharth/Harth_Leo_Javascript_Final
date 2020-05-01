@@ -134,5 +134,7 @@ volcano <- volcano %>%
 # 
 # st_write(volcano_sf, "volcano_sf.geojson", driver = "geojson")
 
+volcano_test <- filter(volcano, volcano$Register_last_eruption == "Yes")
+
 ggplot(data = volcano_test) +
   geom_histogram(aes(Elevation_meters), bins = 100)

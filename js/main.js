@@ -6,11 +6,31 @@ var map = L.map('map', {
   center: [24, 28],
   zoom: 2
 });
-var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+
+// LEAFLET
+// var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+//   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+//   subdomains: 'abcd',
+//   minZoom: 0,
+//   maxZoom: 20,
+//   ext: 'png'
+// }).addTo(map);
+
+// TERRAIN
+// var Stamen_TonerLite = L.tileLayer('https://api.mapbox.com/styles/v1/leonardoharth/ck9onf1hi5udu1ioj8t46i51i/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbmFyZG9oYXJ0aCIsImEiOiJjazh1bG8ydjkwY2tqM3RxczdnaHozNGpyIn0.fgSBf5Jyjs_Ym4a5-EKWnA', {
+//   attribution: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a> <a href="https://apps.mapbox.com/feedback/">Improve this map</a>',
+//   subdomains: 'abcd',
+//   minZoom: 0,
+//   maxZoom: 22,
+//   ext: 'png'
+// }).addTo(map);
+
+// BLUE
+var Stamen_TonerLite = L.tileLayer('https://api.mapbox.com/styles/v1/leonardoharth/ck9opvgrb199y1ip8zuosa8hv/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbmFyZG9oYXJ0aCIsImEiOiJjazh1bG8ydjkwY2tqM3RxczdnaHozNGpyIn0.fgSBf5Jyjs_Ym4a5-EKWnA', {
+  attribution: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a> <a href="https://apps.mapbox.com/feedback/">Improve this map</a>',
   subdomains: 'abcd',
   minZoom: 0,
-  maxZoom: 20,
+  maxZoom: 22,
   ext: 'png'
 }).addTo(map);
 
@@ -44,7 +64,7 @@ download_data.done(function(data) {
       radius: 6,
       fillColor: "#bd0026",
       color: "",
-      fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type']).addTo(basemap);
+      fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type'] + '</br>' + "Elevation(m): " + entry['Elevation_meters'] + '</br>' + "Year last eruption: " + entry['Year_last_eruption']).addTo(basemap);
   });
   uniqueRegions = _.unique(_.map(parsed_dataset, function(vulcano) { return vulcano.Region; }));
   _.each(uniqueRegions, function(ddvalue) {
@@ -78,8 +98,9 @@ $( "#Region" ).change(function() {
           L.circleMarker([lat, lon], {
             radius: 6,
             fillColor: "#bd0026",
-            color: "",
-            fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type']).addTo(region_map);
+            color: "black",
+            weight: 1,
+            fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type'] + '</br>' + "Elevation(m): " + entry['Elevation_meters'] + '</br>' + "Year last eruption: " + entry['Year_last_eruption']).addTo(region_map);
         });
         map.addLayer(region_map);
         map.fitBounds(region_map.getBounds());
@@ -108,8 +129,9 @@ $('#slider1').change(function(e) {
     L.circleMarker([lat, lon], {
       radius: 6,
       fillColor: "#bd0026",
-      color: "",
-      fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type']).addTo(timelinemap);
+      color: "black",
+      weight: 1,
+      fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type'] + '</br>' + "Elevation(m): " + entry['Elevation_meters'] + '</br>' + "Year last eruption: " + entry['Year_last_eruption']).addTo(timelinemap);
   });
   map.addLayer(timelinemap);
   map.fitBounds(timelinemap.getBounds());
@@ -129,8 +151,9 @@ $('#slider2').change(function(e) {
     L.circleMarker([lat, lon], {
       radius: 6,
       fillColor: "#bd0026",
-      color: "",
-      fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type']).addTo(timelinemap);
+      color: "black",
+      weight: 1,
+      fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type'] + '</br>' + "Elevation(m): " + entry['Elevation_meters'] + '</br>' + "Year last eruption: " + entry['Year_last_eruption']).addTo(timelinemap);
   });
   map.addLayer(timelinemap);
   map.fitBounds(timelinemap.getBounds());
@@ -264,8 +287,9 @@ $( "#coloring" ).change(function() {
           L.circleMarker([lat, lon], {
             radius: 8,
             fillColor: color,
-            color: "",
-            fillOpacity: .9}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type']).addTo(colormap);
+            color: "black",
+            weight: 1,
+            fillOpacity: .9}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type'] + '</br>' + "Elevation(m): " + entry['Elevation_meters'] + '</br>' + "Year last eruption: " + entry['Year_last_eruption']).addTo(colormap);
         });
         map.addLayer(colormap);
         $('#reset').show();
