@@ -5,3 +5,5 @@ https://volcano.si.edu/#
 
 Before creating the app, the data was cleaned and reorganized using R. The app was built from scratch using HTML, Javascript, and CSS.
 
+This app was optimized for Mozilla Firefox Browser.
+
