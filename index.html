@@ -11,24 +11,32 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <h1>VOLCANO EXPLORER</h1>
-        </br>
+        <p id="page01">Welcome to Volcano Explorer! Please select a Volcanic Region from the dropdown menu below to start your journey of discovery. Try exploring different regions. Selecting “All Regions” will include all volcanoes. At any time, click on a volcano icon to see more information about it.</p>
+        <p id="page02">You may use the sliders to select a specific time range to filter volcanoes that erupted within it or change the volcanic region. After selecting a time range, a dropdown menu will offer visualization options for the volcanoes’ properties.</p>
+        <p id="page03">Once you are satisfied with your region and time range, use the dropdown menu at the bottom to select the feature you want to visualize.</p>
+        <p id="page04">You can now change the feature to be displayed. Click the ‘Reset’ button to restart your exploration. I hope you have fun.</p>
         <div>
-          <select id="Region">
+          <select id="Region" class="select-css">
             <option selected="All">Please select a Volcanic Region</option>
           </select>
         </div>
-        <div class="slider">
+        </br>
+        <div id="slider">
             <p>Please Select the starting year for registered eruptions:</p>
             <input id="slider1" type="range" min=-10450 max=2020 value=-10450>
+            <h3>Starting Date: </h3><h3 id="value_slider01">10,450</h3><h3 id="Era1"> BCE</h3>
+            </br>
             </br>
             </br>
             <p>Please Select the ending year for registered eruptions:</p>
             <input id="slider2" type="range" min=-10450 max=2020 value=2020>
+            <h3>Ending Date: </h3><h3 id="value_slider02">2020</h3><h3 id="Era2"> CE</h3>
+            <p></p>
             </br>
             </br>
         </div>
         <div class="coloring">
-          <select id="coloring">
+          <select id="coloring" class="select-css">
             <option selected="All">Please select a feature to display</option>
             <!-- <option value="Type">Type</option>
             <option value="Elevation">Elevation</option>
@@ -47,25 +55,17 @@
           <div class='legend-title'>Types of Volcanoes</div>
           <div class='legend-scale'>
             <ul class='legend-labels'>
-              <li><span style='background:#fff7f3;'></span>Maar</li>
-              <li><span style='background:#fde0dd;'></span>Lava dome</li>
-              <li><span style='background:#fcc5c0;'></span>Pyroclastic cone</li>
-              <li><span style='background:#fa9fb5;'></span>Caldera</li>
-              <li><span style='background:#f768a1;'></span>Stratovolcano</li>
-              <li><span style='background:#dd3497;'></span>Complex</li>
-              <li><span style='background:#ae017e;'></span>Submarine</li>
-              <li><span style='background:#7a0177;'></span>Shield</li>
-              <li><span style='background:#49006a;'></span>Lava cone</li>
-              <li><span style='background:#000000;'></span>Volcanic field</li>
-              <li><span style='background:#081d58;'></span>Explosion crater</li>
-              <li><span style='background:#253494;'></span>Fissure vent</li>
-              <li><span style='background:#225ea8;'></span>Tuff cone</li>
-              <li><span style='background:#1d91c0;'></span>Pyroclastic shield</li>
-              <li><span style='background:#41b6c4;'></span>Compound</li>
-              <li><span style='background:#7fcdbb;'></span>Crater rows</li>
-              <li><span style='background:#c7e9b4;'></span>Cone</li>
-              <li><span style='background:#edf8b1;'></span>Tuff ring</li>
-              <li><span style='background:#ffffd9;'></span>Subglacial</li>
+              <li><span style='background:#ffffff;'></span>Maar</li>
+              <li><span style='background:#ffffe5;'></span>Lava Dome</li>
+              <li><span style='background:#fff7bc;'></span>Cone</li>
+              <li><span style='background:#fee391;'></span>Caldera</li>
+              <li><span style='background:#fec44f;'></span>Stratovolcano</li>
+              <li><span style='background:#fe9929;'></span>Complex</li>
+              <li><span style='background:#ec7014;'></span>Submarine</li>
+              <li><span style='background:#cc4c02;'></span>Shield</li>
+              <li><span style='background:#993404;'></span>Volcanic Field</li>
+              <li><span style='background:#662506;'></span>Fissure Vent</li>
+              <li><span style='background:#000000;'></span>Other</li>
             </ul>
           </div>
           <div class='legend-source'>Source: <a href="https://volcano.si.edu/#">National Museum of Natural History</a></div>
@@ -97,13 +97,13 @@
           <div class='legend-title'>Elevation in meters</div>
           <div class='legend-scale'>
             <ul class='legend-labels'>
-              <li><span style='background:#ffffb2;'></span>Over 5000m</li>
-              <li><span style='background:#fed976;'></span>Between 2500 and 5000m</li>
-              <li><span style='background:#feb24c;'></span>Between 1250 and 2500</li>
-              <li><span style='background:#fd8d3c;'></span>Between 500 and 1250</li>
-              <li><span style='background:#f03b20;'></span>Between 0 and 500m</li>
-              <li><span style='background:#662506;'></span>Between 0 and 1000m underwater</li>
-              <li><span style='background:#bd0026;'></span>Below 1000m underwater</li>
+              <li><span style='background:#fff7bc;'></span>Over 5000m</li>
+              <li><span style='background:#fee391;'></span>Between 2500 and 5000m</li>
+              <li><span style='background:#fec44f;'></span>Between 1250 and 2500</li>
+              <li><span style='background:#fe9929;'></span>Between 500 and 1250</li>
+              <li><span style='background:#ec7014;'></span>Between 0 and 500m</li>
+              <li><span style='background:#cc4c02;'></span>Between 0 and 1000m underwater</li>
+              <li><span style='background:#993404;'></span>Below 1000m underwater</li>
             </ul>
           </div>
           <div class='legend-source'>Source: <a href="https://volcano.si.edu/#">National Museum of Natural History</a></div>

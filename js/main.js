@@ -16,16 +16,7 @@ var map = L.map('map', {
 //   ext: 'png'
 // }).addTo(map);
 
-// TERRAIN
-// var Stamen_TonerLite = L.tileLayer('https://api.mapbox.com/styles/v1/leonardoharth/ck9onf1hi5udu1ioj8t46i51i/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbmFyZG9oYXJ0aCIsImEiOiJjazh1bG8ydjkwY2tqM3RxczdnaHozNGpyIn0.fgSBf5Jyjs_Ym4a5-EKWnA', {
-//   attribution: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a> <a href="https://apps.mapbox.com/feedback/">Improve this map</a>',
-//   subdomains: 'abcd',
-//   minZoom: 0,
-//   maxZoom: 22,
-//   ext: 'png'
-// }).addTo(map);
-
-// BLUE
+// MAPBOX
 var Stamen_TonerLite = L.tileLayer('https://api.mapbox.com/styles/v1/leonardoharth/ck9opvgrb199y1ip8zuosa8hv/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbmFyZG9oYXJ0aCIsImEiOiJjazh1bG8ydjkwY2tqM3RxczdnaHozNGpyIn0.fgSBf5Jyjs_Ym4a5-EKWnA', {
   attribution: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a> <a href="https://apps.mapbox.com/feedback/">Improve this map</a>',
   subdomains: 'abcd',
@@ -35,7 +26,7 @@ var Stamen_TonerLite = L.tileLayer('https://api.mapbox.com/styles/v1/leonardohar
 }).addTo(map);
 
 /* =====================
-Initial data import
+Initial data import and settings
 ===================== */
 
 var download_data = $.ajax("https://gist.githubusercontent.com/leonardoharth/cdd2eb8c725abe247e9b688f3f5a8b93/raw/283940b810a249d01b2ec172e814bdea61793a19/volcano.json");
@@ -44,12 +35,15 @@ var parsed_dataset = [];
 var basemap = L.featureGroup();
 var uniqueRegions = [];
 
-$('.slider').hide();
+$('#slider').hide();
 $('.coloring').hide();
 $('#reset').hide();
 $('#legend_volcano_type').hide();
 $('#legend_rock_type').hide();
 $('#legend_elevation').hide();
+$('#page02').hide();
+$('#page03').hide();
+$('#page04').hide();
 
 /* =====================
 Add a base map for initial vizualization, create subregion list
@@ -61,7 +55,7 @@ download_data.done(function(data) {
     var lat = entry['Latitude'];
     var lon = entry['Longitude'];
     L.circleMarker([lat, lon], {
-      radius: 6,
+      radius: 5,
       fillColor: "#bd0026",
       color: "",
       fillOpacity: .4}).bindPopup("Name: " + entry['Name'] + '</br>' + "Epoch: " + entry['Epoch'] + '</br>' + "Type: " + entry['Type'] + '</br>' + "Dominant rock type: " + entry['Dominant_rock_type'] + '</br>' + "Elevation(m): " + entry['Elevation_meters'] + '</br>' + "Year last eruption: " + entry['Year_last_eruption']).addTo(basemap);
@@ -88,7 +82,6 @@ $( "#Region" ).change(function() {
         map.removeLayer(basemap);
         map.removeLayer(timelinemap);
         region = $("#Region option:selected").text();
-        console.log(region);
         if (region === "All regions") {filtered_map = parsed_dataset} else {
           filtered_map = _.filter(parsed_dataset, function(volcano){ return volcano.Region == region; });
         }
@@ -104,7 +97,9 @@ $( "#Region" ).change(function() {
         });
         map.addLayer(region_map);
         map.fitBounds(region_map.getBounds());
-        $('.slider').show();
+        $('#slider').show();
+        $('#page02').show();
+        $('#page01').hide();
     });
 
 /* =====================
@@ -136,6 +131,11 @@ $('#slider1').change(function(e) {
   map.addLayer(timelinemap);
   map.fitBounds(timelinemap.getBounds());
   $('.coloring').show();
+  $('#page03').show();
+  $('#page02').hide();
+  if (initial_year < 0) {var text_year = initial_year*(-1);} else {var text_year = initial_year;}
+  $('#value_slider01').text(text_year);
+  if (initial_year >= 0) {$('#Era1').text(" CE");} else {$('#Era1').text(" BCE");}
 });
 
 $('#slider2').change(function(e) {
@@ -158,6 +158,11 @@ $('#slider2').change(function(e) {
   map.addLayer(timelinemap);
   map.fitBounds(timelinemap.getBounds());
   $('.coloring').show();
+  $('#page03').show();
+  $('#page02').hide();
+  if (end_year < 0) {var text_year = end_year*(-1);} else {var text_year = end_year;}
+  $('#value_slider02').text(text_year);
+  if (end_year >= 0) {$('#Era2').text(" CE");} else {$('#Era2').text(" BCE");}
 });
 
 /* =====================
@@ -171,58 +176,59 @@ $('#coloring').append('<option value="Rock_type">Rock_type</option>');
 var colormap = L.featureGroup();
 var coloring;
 
+// I grouped volcanoes of the same family and the very rare ones under other to improve legibility
 var get_color_type = function(entry) {
-  if (entry['Type'] === "Maar") {
-      return "#fff7f3";
-  } else if (entry['Type'] === "Lava dome") {
-      return "#fde0dd";
+  if (entry['Type'] === "Maar") { //Maar
+      return "#ffffff";
+  } else if (entry['Type'] === "Lava dome") { // Lava dome
+      return "#ffffe5";
   } else if (entry['Type'] === "Pyroclastic cone") {
-      return "#fcc5c0";
+      return "#fff7bc";
   } else if (entry['Type'] === "Caldera") {
-      return "#fa9fb5";
+      return "#fee391";
   } else if (entry['Type'] === "Stratovolcano") {
-      return "#f768a1";
+      return "#fec44f";
   } else if (entry['Type'] === "Complex") {
-      return "#dd3497";
+      return "#fe9929";
   } else if (entry['Type'] === "Submarine") {
-      return "#ae017e";
+      return "#ec7014";
   } else if (entry['Type'] === "Shield") {
-      return "#7a0177";
+      return "#cc4c02";
   } else if (entry['Type'] === "Lava cone") {
-      return "#49006a";
+      return "#fff7bc";
   } else if (entry['Type'] === "Volcanic field") {
-      return "#000000";
+      return "#993404";
   } else if (entry['Type'] === "Explosion crater") {
-      return "#081d58";
+      return "#000000";
   } else if (entry['Type'] === "Fissure vent") {
-      return "#253494";
+      return "#662506";
   } else if (entry['Type'] === "Tuff cone") {
-      return "#225ea8";
+      return "#fff7bc";
   } else if (entry['Type'] === "Pyroclastic shield") {
-      return "#1d91c0";
+      return "#cc4c02";
   } else if (entry['Type'] === "Compound") {
-      return "#41b6c4";
+      return "#fe9929";
   } else if (entry['Type'] === "Crater rows") {
-      return "#7fcdbb";
+      return "#000000";
   } else if (entry['Type'] === "Cone") {
-      return "#c7e9b4";
+      return "#fff7bc";
   } else if (entry['Type'] === "Tuff ring") {
-      return "#edf8b1";
+      return "#000000";
   } else if (entry['Type'] === "Subglacial") {
-      return "#ffffd9";
+      return "#000000";
   } else {
       return "#41ab5d";
   }
 };
 
 var get_color_elevation = function(entry) {
-    return entry['Elevation_meters'] > 5000  ? "#ffffb2" :
-           entry['Elevation_meters'] > 2500  ? "#fed976" :
-           entry['Elevation_meters'] > 1250  ? "#feb24c" :
-           entry['Elevation_meters'] > 500   ? "#fd8d3c" :
-           entry['Elevation_meters'] > 0     ? "#f03b20" :
-           entry['Elevation_meters'] > -1000 ? "#bd0026" :
-                      "#000000";
+    return entry['Elevation_meters'] > 5000  ? "#fff7bc" :
+           entry['Elevation_meters'] > 2500  ? "#fee391" :
+           entry['Elevation_meters'] > 1250  ? "#fec44f" :
+           entry['Elevation_meters'] > 500   ? "#fe9929" :
+           entry['Elevation_meters'] > 0     ? "#ec7014" :
+           entry['Elevation_meters'] > -1000 ? "#cc4c02" :
+                      "#993404";
 };
 
 var get_color_rock = function(entry) {
@@ -254,7 +260,7 @@ var get_color_rock = function(entry) {
 }
 
 $( "#coloring" ).change(function() {
-        $('.slider').hide();
+        $('#slider').hide();
         $('#Region').hide();
         map.removeLayer(region_map);
         map.removeLayer(basemap);
@@ -293,4 +299,6 @@ $( "#coloring" ).change(function() {
         });
         map.addLayer(colormap);
         $('#reset').show();
+        $('#page04').show();
+        $('#page03').hide();
     });
