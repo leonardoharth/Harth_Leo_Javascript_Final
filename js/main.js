@@ -16,13 +16,25 @@ var map = L.map('map', {
 //   ext: 'png'
 // }).addTo(map);
 
-// MAPBOX
-var Stamen_TonerLite = L.tileLayer('https://api.mapbox.com/styles/v1/leonardoharth/ck9opvgrb199y1ip8zuosa8hv/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbmFyZG9oYXJ0aCIsImEiOiJjazh1bG8ydjkwY2tqM3RxczdnaHozNGpyIn0.fgSBf5Jyjs_Ym4a5-EKWnA', {
-  attribution: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a> <a href="https://apps.mapbox.com/feedback/">Improve this map</a>',
-  subdomains: 'abcd',
-  minZoom: 0,
-  maxZoom: 22,
-  ext: 'png'
+// // MAPBOX
+// var Stamen_TonerLite = L.tileLayer('https://api.mapbox.com/styles/v1/leonardoharth/ck9opvgrb199y1ip8zuosa8hv/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVvbmFyZG9oYXJ0aCIsImEiOiJjazh1bG8ydjkwY2tqM3RxczdnaHozNGpyIn0.fgSBf5Jyjs_Ym4a5-EKWnA', {
+//   attribution: '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a> <a href="https://apps.mapbox.com/feedback/">Improve this map</a>',
+//   subdomains: 'abcd',
+//   minZoom: 0,
+//   maxZoom: 22,
+//   ext: 'png'
+// }).addTo(map);
+
+// Thunderforest
+// var Thunderforest_SpinalMap = L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
+// 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+// 	apikey: '3483edbcf87f4bea9094feacd6f96f74',
+// 	maxZoom: 22
+// }).addTo(map);
+
+var Esri_WorldPhysical = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: US National Park Service',
+	maxZoom: 22
 }).addTo(map);
 
 /* =====================
